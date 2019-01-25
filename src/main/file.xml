@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server description="new server">
+
+    <!-- Enable features -->
+    <featureManager>
+        <feature>adminCenter-1.0</feature>
+        <feature>transportSecurity-1.0</feature>
+    </featureManager>
+
+    <!-- To access this server from a remote client add a host attribute to the following element, e.g. host="*" -->
+    <httpEndpoint id="defaultHttpEndpoint"
+                  httpPort="9080"
+                  host="*"
+                  httpsPort="9443" />
+
+    <!-- Define an Administrator and non-Administrator -->
+    <basicRegistry id="basic">
+        <user name="admin" password="adminpwd" />
+        <user name="nonadmin" password="nonadminpwd" />
+    </basicRegistry>
+
+    <!-- Assign 'admin' to Administrator -->
+    <administrator-role>
+        <user>admin</user>
+    </administrator-role>
+
+    <keyStore id="defaultKeyStore" password="Liberty" />
+
+    <!-- Automatically expand WAR files and EAR files -->
+    <applicationManager autoExpand="true"/>
+
+    <sslDefault outboundSSLRef="alternateSSLSettings" />
+
+    <!-- SSL configuration for Inbound SSL connection-->
+    <ssl id="defaultSSLConfig"
+         keyStoreRef="defaultKeyStore"
+         trustStoreRef="defaultTrustStore" />
+
+    <keyStore id="defaultKeyStore"
+              location="key.jks"
+              type="JKS"
+              password="mecarel" />
+
+    <keyStore id="DefaultTrustStore"
+              location="trust.jks"
+              type="JKS"
+              password="mecarel" />
+
+    <!-- SSL configuration for outbound SSL connections-->
+    <ssl id="alternateSSLSettings"
+         keyStoreRef="alternateKeyStore"
+         trustStoreRef="alternateTrustStore" />
+
+    <keyStore id="alternateKeyStore"
+              location="${server.config.dir}/alternateServerKeyFile.jks"
+              type="JKS"
+              password="mecarel" />
+
+    <keyStore id="alternateTrustStore"
+              location="${server.config.dir}/alternateServerTrustFile.jks"
+              type="JKS"
+              password="mecarel"/>
+</server>
